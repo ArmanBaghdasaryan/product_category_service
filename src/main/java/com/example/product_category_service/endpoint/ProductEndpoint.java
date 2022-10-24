@@ -3,7 +3,6 @@ package com.example.product_category_service.endpoint;
 import com.example.product_category_service.dto.CreateProductDto;
 import com.example.product_category_service.dto.ProductResponseDto;
 import com.example.product_category_service.entity.Product;
-import com.example.product_category_service.mapper.ProductMapper;
 import com.example.product_category_service.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import java.util.List;
 public class ProductEndpoint {
 
     private final ProductService productService;
-    private final ProductMapper productMapper;
 
 
     @GetMapping("/product")
@@ -26,8 +24,8 @@ public class ProductEndpoint {
 
     @PostMapping("/product")
     public ResponseEntity<?> addNewProduct(@RequestBody CreateProductDto createProductDto) {
-        Product createProduct = productService.save(productMapper.map(createProductDto));
-        return ResponseEntity.ok(createProduct);
+        productService.save(createProductDto);
+        return ResponseEntity.ok(createProductDto);
     }
 
     @DeleteMapping("/product/{id}")
@@ -37,12 +35,12 @@ public class ProductEndpoint {
     }
 
     @PutMapping("/product")
-    public ResponseEntity<Product> updateProduct(@RequestBody ProductResponseDto productDto) {
+    public ResponseEntity<?> updateProduct(@RequestBody ProductResponseDto productDto) {
         if (productDto.getId() == 0) {
             return ResponseEntity.badRequest().build();
         }
-        Product updateProduct = productService.save(productMapper.map(productDto));
-        return ResponseEntity.ok(updateProduct);
+        productService.update(productDto);
+        return ResponseEntity.ok(productDto);
     }
 
     @GetMapping("/byCategory/{id}")
