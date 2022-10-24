@@ -9,34 +9,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/products")
 public class ProductEndpoint {
 
     private final ProductService productService;
 
 
-    @GetMapping("/product")
+    @GetMapping()
     public List<Product> getAllProducts() {
         return productService.findAll();
     }
 
-    @PostMapping("/product")
+    @PostMapping()
     public ResponseEntity<?> addNewProduct(@RequestBody CreateProductDto createProductDto) {
         productService.save(createProductDto);
         return ResponseEntity.ok(createProductDto);
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
         productService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/product")
-    public ResponseEntity<?> updateProduct(@RequestBody ProductResponseDto productDto) {
-        if (productDto.getId() == 0) {
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable("id") int id,
+                                           @RequestBody ProductResponseDto productDto) {
+        Optional<Product> byId = productService.findById(id);
+        if (byId.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
         productService.update(productDto);

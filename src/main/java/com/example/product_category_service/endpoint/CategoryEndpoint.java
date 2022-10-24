@@ -9,34 +9,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/categories")
 public class CategoryEndpoint {
 
     private final CategoryService categoryService;
 
 
-    @GetMapping("/category")
+    @GetMapping()
     public List<Category> getAllCategories() {
         return categoryService.findAll();
     }
 
-    @PostMapping("/category")
+    @PostMapping()
     public ResponseEntity<?> createCategory(@RequestBody CreateCategoryDto createCategoryDto) {
         categoryService.save(createCategoryDto);
         return ResponseEntity.ok(createCategoryDto);
     }
 
-    @DeleteMapping("/category/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
         categoryService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/category")
-    public ResponseEntity<?> updateCategory(@RequestBody CategoryResponseDto categoryDto) {
-        if (categoryDto.getId() == 0) {
+    @PutMapping("{id}")
+    public ResponseEntity<?> updateCategory(@PathVariable("id") int id,
+                                            @RequestBody CategoryResponseDto categoryDto) {
+        Optional<Category> byId = categoryService.findCategoryById(id);
+        if (byId.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
         categoryService.update(categoryDto);

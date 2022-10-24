@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +28,8 @@ public class CategoryService {
     }
     public void deleteById(int id) {
         categoryRepository.deleteById(id);
+    }
+    public Optional<Category> findCategoryById(int id) {
+        return categoryRepository.findById(id);
     }
 }
