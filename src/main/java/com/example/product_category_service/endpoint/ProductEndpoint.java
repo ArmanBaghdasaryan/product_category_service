@@ -20,14 +20,13 @@ public class ProductEndpoint {
 
 
     @GetMapping()
-    public List<Product> getAllProducts() {
-        return productService.findAll();
+    public ResponseEntity<List<Product>> getAllProducts() {
+        return ResponseEntity.ok(productService.findAll());
     }
 
     @PostMapping()
-    public ResponseEntity<?> addNewProduct(@RequestBody CreateProductDto createProductDto) {
-        productService.save(createProductDto);
-        return ResponseEntity.ok(createProductDto);
+    public ResponseEntity<Product> addNewProduct(@RequestBody CreateProductDto createProductDto) {
+        return ResponseEntity.ok(productService.save(createProductDto));
     }
 
     @DeleteMapping("{id}")
@@ -37,19 +36,22 @@ public class ProductEndpoint {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable("id") int id,
-                                           @RequestBody ProductResponseDto productDto) {
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") int id,
+                                                 @RequestBody ProductResponseDto productDto) {
         Optional<Product> byId = productService.findById(id);
         if (byId.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        productService.update(productDto);
-        return ResponseEntity.ok(productDto);
+        return ResponseEntity.ok(productService.update(productDto));
     }
 
     @GetMapping("/byCategory/{id}")
-    public List<Product> getProductsByCategory(@PathVariable("id") int id) {
-        return productService.getProductsByCategoryId(id);
+    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable("id") int id) {
+        if (productService.getProductsByCategoryId(id).isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(productService.getProductsByCategoryId(id));
     }
+
 
 }

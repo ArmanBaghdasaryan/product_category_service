@@ -22,11 +22,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void save(CreateProductDto createProductDto) {
-        productRepository.save(productMapper.map(createProductDto));
+    public Product save(CreateProductDto createProductDto) {
+       return productRepository.save(productMapper.map(createProductDto));
     }
-    public void update(ProductResponseDto productResponseDto) {
-        productRepository.save(productMapper.map(productResponseDto));
+    public Product update(ProductResponseDto productResponseDto) {
+      return   productRepository.save(productMapper.map(productResponseDto));
     }
 
     public void deleteById(int id) {

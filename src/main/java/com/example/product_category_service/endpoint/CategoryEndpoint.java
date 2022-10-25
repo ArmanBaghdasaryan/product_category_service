@@ -20,14 +20,13 @@ public class CategoryEndpoint {
 
 
     @GetMapping()
-    public List<Category> getAllCategories() {
-        return categoryService.findAll();
+    public ResponseEntity<List<Category>> getAllCategories() {
+        return ResponseEntity.ok(categoryService.findAll());
     }
 
     @PostMapping()
-    public ResponseEntity<?> createCategory(@RequestBody CreateCategoryDto createCategoryDto) {
-        categoryService.save(createCategoryDto);
-        return ResponseEntity.ok(createCategoryDto);
+    public ResponseEntity<Category> createCategory(@RequestBody CreateCategoryDto createCategoryDto) {
+        return ResponseEntity.ok(categoryService.save(createCategoryDto));
     }
 
     @DeleteMapping("{id}")
@@ -37,14 +36,13 @@ public class CategoryEndpoint {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateCategory(@PathVariable("id") int id,
+    public ResponseEntity<Category> updateCategory(@PathVariable("id") int id,
                                             @RequestBody CategoryResponseDto categoryDto) {
         Optional<Category> byId = categoryService.findCategoryById(id);
         if (byId.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        categoryService.update(categoryDto);
-        return ResponseEntity.ok(categoryDto);
+        return ResponseEntity.ok(categoryService.update(categoryDto));
     }
 
 }
