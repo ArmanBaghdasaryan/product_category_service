@@ -9,4 +9,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findProductByCategoryId(int categoryId);
 
+    void deleteByIdAndUserId(int productId, int UserID);
+
 }

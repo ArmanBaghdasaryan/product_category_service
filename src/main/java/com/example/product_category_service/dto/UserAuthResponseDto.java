@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateCategoryDto {
+public class UserAuthResponseDto {
 
-    private String name;
-
-
+    private String token;
+    private UserDto user;
 }

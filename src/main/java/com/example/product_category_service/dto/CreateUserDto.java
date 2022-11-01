@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateCategoryDto {
+public class CreateUserDto {
 
     private String name;
-
+    private String surname;
+    private String email;
+    private String password;
 
 }

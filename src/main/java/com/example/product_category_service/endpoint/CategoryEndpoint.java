@@ -3,6 +3,7 @@ package com.example.product_category_service.endpoint;
 import com.example.product_category_service.dto.CategoryResponseDto;
 import com.example.product_category_service.dto.CreateCategoryDto;
 import com.example.product_category_service.entity.Category;
+import com.example.product_category_service.mapper.CategoryMapper;
 import com.example.product_category_service.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,32 +18,34 @@ import java.util.Optional;
 public class CategoryEndpoint {
 
     private final CategoryService categoryService;
+    private final CategoryMapper mapper;
 
 
-    @GetMapping()
-    public ResponseEntity<List<Category>> getAllCategories() {
-        return ResponseEntity.ok(categoryService.findAll());
+    @GetMapping
+    public List<CategoryResponseDto> getAllCategory() {
+        return mapper.map(categoryService.findAll());
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Category> createCategory(@RequestBody CreateCategoryDto createCategoryDto) {
-        return ResponseEntity.ok(categoryService.save(createCategoryDto));
+        return ResponseEntity.ok(categoryService.save(mapper.map(createCategoryDto)));
+
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
         categoryService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable("id") int id,
-                                            @RequestBody CategoryResponseDto categoryDto) {
+                                                   @RequestBody CategoryResponseDto categoryDto) {
         Optional<Category> byId = categoryService.findCategoryById(id);
         if (byId.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(categoryService.update(categoryDto));
+        return ResponseEntity.ok(categoryService.update(mapper.map(categoryDto)));
     }
 
 }

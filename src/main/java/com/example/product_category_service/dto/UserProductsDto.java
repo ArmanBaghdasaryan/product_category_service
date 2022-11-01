@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateCategoryDto {
+public class UserProductsDto {
 
+    private int id;
     private String name;
-
 
 }
