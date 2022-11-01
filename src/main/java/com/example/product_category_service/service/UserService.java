@@ -1,6 +1,5 @@
 package com.example.product_category_service.service;
 
-import com.example.product_category_service.dto.UserProductsDto;
 import com.example.product_category_service.entity.Role;
 import com.example.product_category_service.entity.User;
 import com.example.product_category_service.mapper.UserMapper;
@@ -9,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

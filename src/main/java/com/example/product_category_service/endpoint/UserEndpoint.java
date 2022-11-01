@@ -3,20 +3,19 @@ package com.example.product_category_service.endpoint;
 import com.example.product_category_service.dto.CreateUserDto;
 import com.example.product_category_service.dto.UserAuthDto;
 import com.example.product_category_service.dto.UserAuthResponseDto;
-import com.example.product_category_service.entity.Product;
 import com.example.product_category_service.entity.User;
 import com.example.product_category_service.mapper.UserMapper;
 import com.example.product_category_service.service.UserService;
 import com.example.product_category_service.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController

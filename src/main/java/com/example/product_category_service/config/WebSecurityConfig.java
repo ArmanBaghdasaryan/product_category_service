@@ -7,7 +7,6 @@ import com.example.product_category_service.security.JwtAuthenticationTokenFilte
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -35,8 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/categories/**").hasAuthority(Role.ADMIN.name())
-//                .antMatchers("/products").hasAnyAuthority(Role.USER.name())
-//                .antMatchers( "/products").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
                 .anyRequest().permitAll();
 
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);

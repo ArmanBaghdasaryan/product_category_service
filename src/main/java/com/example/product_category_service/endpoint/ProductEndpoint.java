@@ -5,12 +5,10 @@ import com.example.product_category_service.dto.ProductResponseDto;
 import com.example.product_category_service.entity.Product;
 import com.example.product_category_service.entity.User;
 import com.example.product_category_service.mapper.ProductMapper;
-import com.example.product_category_service.security.CurrentUser;
 import com.example.product_category_service.security.CurrentUserDetailServiceImpl;
 import com.example.product_category_service.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -13,14 +13,8 @@ public interface ProductMapper {
     Product map(CreateProductDto createProductdto);
 
     Product map(ProductResponseDto productDto);
-//
-//    ProductResponseDto map(Product product);
-//
+
     List<ProductResponseDto> map(List<Product> products);
-//
-//    UserProductsDto map(User user);
-//
-//    User map(UserProductsDto userProductsDto);
 
 
 }

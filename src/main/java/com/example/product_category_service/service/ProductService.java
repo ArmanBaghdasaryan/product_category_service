@@ -26,10 +26,6 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-//    public boolean deleteByProductIdAndUserId(int productId, int userId) {
-//        productRepository.deleteByIdAndUserId(productId, userId);
-//        return false;
-//    }
     public void deleteById(int productId) {
         productRepository.deleteById(productId);
     }
