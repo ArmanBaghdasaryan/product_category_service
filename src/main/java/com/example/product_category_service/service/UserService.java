@@ -2,7 +2,6 @@ package com.example.product_category_service.service;
 
 import com.example.product_category_service.entity.Role;
 import com.example.product_category_service.entity.User;
-import com.example.product_category_service.mapper.UserMapper;
 import com.example.product_category_service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +15,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final UserMapper userMapper;
 
     public User register(User user) {
         user.setRole(Role.USER);

@@ -1,6 +1,7 @@
 package com.example.product_category_service.security;
 
 import com.example.product_category_service.util.JwtTokenUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -34,7 +36,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             try {
                 username = tokenUtil.getUsernameFromToken(authToken);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Tokes id invalid or expired: {}", e.getMessage());
             }
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
