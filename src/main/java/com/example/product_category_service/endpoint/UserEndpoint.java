@@ -31,14 +31,13 @@ public class UserEndpoint {
     private final JwtTokenUtil jwtTokenUtil;
 
 
-    @PostMapping()
-    public ResponseEntity<?> register(@RequestBody CreateUserDto createUserDto) {
+    @PostMapping
+    public ResponseEntity<User> register(@RequestBody CreateUserDto createUserDto) {
         Optional<User> existingUser = userService.findByEmail(createUserDto.getEmail());
         if (existingUser.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        User user = mapper.map(createUserDto);
-        return ResponseEntity.ok(mapper.map(userService.register(user)));
+        return ResponseEntity.ok(userService.register(mapper.map(createUserDto)));
     }
 
     @PostMapping("/auth")

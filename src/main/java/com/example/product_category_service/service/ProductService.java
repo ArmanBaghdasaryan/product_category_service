@@ -40,8 +40,18 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Product update(Product product) {
-        return productRepository.save(product);
+    public Product update(Product requestProduct, int id) {
+        Optional<Product> byId = productRepository.findById(id);
+        if (byId.isPresent()) {
+            Product product = byId.get();
+            product.setPrice(requestProduct.getPrice());
+            product.setCategory(requestProduct.getCategory());
+            product.setUser(requestProduct.getUser());
+            product.setCount(requestProduct.getCount());
+            product.setTitle(requestProduct.getTitle());
+            return productRepository.save(product);
+        }
+        return null;
     }
 
     public void deleteById(int productId) {

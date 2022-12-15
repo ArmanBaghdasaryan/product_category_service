@@ -32,14 +32,12 @@ public class ProductEndpoint {
 
     @PostMapping
     public ResponseEntity<Product> addNewProduct(@RequestBody CreateProductDto createProductDto) {
-        log.info("endpoint /products can be called by all users");
         return ResponseEntity.ok(productService.save(productMapper.map(createProductDto)));
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") int id, @AuthenticationPrincipal CurrentUser currentUser) {
-        log.info("endpoint /products can only be deleted by an authenticated user and can only delete their products");
         User user = currentUser.getUser();
         Optional<Product> byId = productService.findById(id);
         if (byId.isPresent()) {
@@ -56,15 +54,9 @@ public class ProductEndpoint {
     public ResponseEntity<?> updateProduct(@RequestBody ProductResponseDto productResponseDto,
                                            @PathVariable("id") int id,
                                            @AuthenticationPrincipal CurrentUser currentUser) {
-        log.info("endpoint /products can only be updated by an authenticated user and can only update their products");
         User user = currentUser.getUser();
-        Optional<Product> byId = productService.findById(id);
-        if (byId.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-        Product product = byId.get();
-        if (user.getId() == product.getUser().getId()) {
-            return ResponseEntity.ok((productService.update(productMapper.map(productResponseDto))));
+        if (user.getId() == productResponseDto.getUser().getId()) {
+            return ResponseEntity.ok((productService.update(productMapper.map(productResponseDto),id)));
         }
         return ResponseEntity.noContent().build();
     }

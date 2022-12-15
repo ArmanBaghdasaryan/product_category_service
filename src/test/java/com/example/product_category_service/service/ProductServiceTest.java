@@ -77,7 +77,7 @@ class ProductServiceTest {
         product.setPrice(10.0d);
         product.setTitle("tv");
         product.setUser(new User(3, "Name", "Sur", "a@mail.com", "123", Role.ADMIN));
-        assertSame(product, productService.update(productForUpdate));
+        assertSame(product, productService.update(productForUpdate,product.getId()));
         verify(productRepository).save(any());
 
     }
